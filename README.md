@@ -2,7 +2,7 @@
 
 A library for curves generation and estimation.
 
-The source code is released under a [BSD 3-Clause license](ros_package_template/LICENSE).
+The source code is released under a [BSD 3-Clause license](LICENSE).
 
 **Authors: Renaud Dubé, Abel Gawel, Péter Fankhauser, Dario Bellicoso, Christian Gehring, Mike Bosse, Paul Furgale, Gabriel Agamennoni**
 
