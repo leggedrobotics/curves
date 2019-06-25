@@ -19,7 +19,7 @@ TODO
 #### Dependencies
 
 - [Eigen](http://eigen.tuxfamily.org) (linear algebra library)
-- [Kindr](https://github.com/ethz-asl/kindr.git) (kinematics library)
+- [Kindr](https://github.com/anybotics/kindr.git) (kinematics library)
 - [Glog](https://github.com/google/glog) (logging library)
 
 			sudo apt-get install libgoogle-glog-dev
@@ -29,7 +29,7 @@ TODO
 To build from source, clone the latest version from this repository into your catkin workspace and compile the package using
 
 	cd catkin_workspace/src
-	git clone https://github.com/ethz-asl/curves.git
+	git clone https://github.com/anybotics/curves.git
 	cd ../
 	catkin_make
 
@@ -41,4 +41,4 @@ Run the unit tests with
 
 ## Bugs & Feature Requests
 
-Please report bugs and request features using the [Issue Tracker](https://github.com/ethz-asl/curves/issues).
+Please report bugs and request features using the [Issue Tracker](https://github.com/anybotics/curves/issues).
