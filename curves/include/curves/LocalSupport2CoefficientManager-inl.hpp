@@ -263,24 +263,23 @@ bool LocalSupport2CoefficientManager<Coefficient>::getCoefficientsAt(Time time,
     return false;
   }
 
-  CoefficientIter it;
-
-  if(time == getMaxTime()) {
-    it = timeToCoefficient_.end();
-    --it;
-  } else {
-    it = timeToCoefficient_.upper_bound(time);
-  }
-  if(it == timeToCoefficient_.begin() || it == timeToCoefficient_.end()) {
+  if(time < getMinTime() || time > getMaxTime()) {
     LOG(INFO) << "time, " << time << ", is out of bounds: [" << getMinTime() << ", " << getMaxTime() << "]";
     return false;
   }
-  --it;
 
-  // Okay. Now we know that the time is bracketed by
-  // it and it + 1.
+  CoefficientIter it;
+  it = timeToCoefficient_.upper_bound(time);
+
+  // Check for edge cases
+  if (it == timeToCoefficient_.end()) {
+    --it;
+  } else if (it == timeToCoefficient_.begin()) {
+    ++it;
+  }
+
+  *outCoefficient1 = it--;
   *outCoefficient0 = it;
-  *outCoefficient1 = (++it);
 
   return true;
 }
