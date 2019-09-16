@@ -25,32 +25,6 @@ curves::PolynomialSplineQuinticScalarCurve::ValueType finiteDifference(curves::P
   return (f_P - f_M)/(2.0*dt);
 }
 
-TEST(PolynomialSplineQuinticScalarCurveTest, Overflow)
-{
-  PolynomialSplineQuinticScalarCurve curve;
-  std::vector<Time> times;
-  std::vector<ValueType> values;
-
-  times.push_back(0.0);
-  values.push_back(ValueType(0.0));
-  times.push_back(4.0);
-  values.push_back(ValueType(1.0));
-
-  curve.fitCurve(times, values);
-  ValueType value;
-  ASSERT_TRUE(curve.evaluate(value, -0.1));
-  EXPECT_NEAR(0.0, value, 1e-10);
-  ASSERT_TRUE(curve.evaluate(value, 0.0));
-  EXPECT_NEAR(0.0, value, 1e-10);
-
-  ASSERT_TRUE(curve.evaluate(value, 4.0));
-  EXPECT_NEAR(1.0, value, 1e-10);
-
-  ASSERT_TRUE(curve.evaluate(value, 4.1));
-  EXPECT_NEAR(1.0, value, 1e-10);
-
-}
-
 TEST(PolynomialSplineQuinticScalarCurveTest, minMax)
 {
   PolynomialSplineQuinticScalarCurve curve;

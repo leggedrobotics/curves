@@ -36,7 +36,7 @@ const typename PolynomialSplineContainer<splineOrder_>::SplineList& PolynomialSp
 template <int splineOrder_>
 bool PolynomialSplineContainer<splineOrder_>::advance(double dt)
 {
-  if (splines_.empty() || containerTime_ >= containerDuration_ || activeSplineIdx_ == splines_.size()) {
+  if (splines_.empty() || containerTime_ >= containerDuration_) {
     return false;
   }
 
@@ -47,8 +47,9 @@ bool PolynomialSplineContainer<splineOrder_>::advance(double dt)
   if ((containerTime_ - timeOffset_ >= splines_[activeSplineIdx_].getSplineDuration())) {
     if (activeSplineIdx_ < (splines_.size() - 1)) {
       timeOffset_ += splines_[activeSplineIdx_].getSplineDuration();
+      ++activeSplineIdx_;
     }
-    ++activeSplineIdx_;
+
   }
 
   return true;
@@ -101,44 +102,29 @@ bool PolynomialSplineContainer<splineOrder_>::isEmpty() const
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getPosition() const
 {
-  if (splines_.empty()) {
-    return 0.0;
-  }
-  if (activeSplineIdx_ == splines_.size()) {
-    return splines_.back().getPositionAtTime(containerTime_ - timeOffset_);
-  }
+  if (splines_.empty()) { return 0.0; }
   return splines_[activeSplineIdx_].getPositionAtTime(containerTime_ - timeOffset_);
 }
 
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getVelocity() const {
-  if (splines_.empty()) {
-    return 0.0;
-  }
-  if (activeSplineIdx_ == splines_.size()) {
-    return splines_.back().getVelocityAtTime(containerTime_ - timeOffset_);
-  }
+  if (splines_.empty()) { return 0.0; }
   return splines_[activeSplineIdx_].getVelocityAtTime(containerTime_ - timeOffset_);
 }
 
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getAcceleration() const
 {
-  if (splines_.empty()) {
-    return 0.0;
-  }
-  if (activeSplineIdx_ == splines_.size()) {
-    return splines_.back().getAccelerationAtTime(containerTime_ - timeOffset_);
-  }
+  if (splines_.empty()) { return 0.0; }
   return splines_[activeSplineIdx_].getAccelerationAtTime(containerTime_ - timeOffset_);
 }
 
 template <int splineOrder_>
 int PolynomialSplineContainer<splineOrder_>::getActiveSplineIndexAtTime(double t, double& timeOffset) const {
-  if (splines_.empty()) return -1;
   timeOffset = 0.0;
+  if (splines_.empty()) { return -1; }
 
-  for (size_t i = 0; i < splines_.size(); i++) {
+  for (size_t i = 0; i < splines_.size(); ++i) {
     if ((t - timeOffset < splines_[i].getSplineDuration())) {
       return i;
     }
@@ -157,17 +143,12 @@ int PolynomialSplineContainer<splineOrder_>::getActiveSplineIndex() const {
 
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getPositionAtTime(double t) const {
+  if (splines_.empty()) { return 0.0; }
   double timeOffset = 0.0;
   const int activeSplineIdx = getActiveSplineIndexAtTime(t, timeOffset);
 
-  if (activeSplineIdx < 0) {
-    // Spline container is empty.
-    return 0.0;
-  }
-
-  if (static_cast<unsigned int>(activeSplineIdx) == splines_.size()) {
-    return splines_.back().getPositionAtTime(splines_.back().getSplineDuration());
-  }
+  // Spline container is empty.
+  if (activeSplineIdx < 0) { return 0.0; }
 
   return splines_[activeSplineIdx].getPositionAtTime(t - timeOffset);
 }
@@ -175,17 +156,12 @@ double PolynomialSplineContainer<splineOrder_>::getPositionAtTime(double t) cons
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getVelocityAtTime(double t) const
 {
+  if (splines_.empty()) { return 0.0; }
   double timeOffset = 0.0;
   const int activeSplineIdx = getActiveSplineIndexAtTime(t, timeOffset);
 
-  if (activeSplineIdx < 0) {
-    // Spline container is empty.
-    return 0.0;
-  }
-
-  if (static_cast<unsigned int>(activeSplineIdx) == splines_.size()) {
-    return splines_.back().getVelocityAtTime(splines_.back().getSplineDuration());
-  }
+  // Spline container is empty.
+  if (activeSplineIdx < 0) { return 0.0; }
 
   return splines_[activeSplineIdx].getVelocityAtTime(t - timeOffset);
 }
@@ -194,17 +170,12 @@ double PolynomialSplineContainer<splineOrder_>::getVelocityAtTime(double t) cons
 template <int splineOrder_>
 double PolynomialSplineContainer<splineOrder_>::getAccelerationAtTime(double t) const
 {
+  if (splines_.empty()) { return 0.0; }
   double timeOffset = 0.0;
   const int activeSplineIdx = getActiveSplineIndexAtTime(t, timeOffset);
 
-  if (activeSplineIdx < 0) {
-    // Spline container is empty.
-    return 0.0;
-  }
-
-  if (static_cast<unsigned int>(activeSplineIdx) == splines_.size()) {
-    return splines_.back().getAccelerationAtTime(splines_.back().getSplineDuration());
-  }
+  // Spline container is empty.
+  if (activeSplineIdx < 0) { return 0.0; }
 
   return splines_[activeSplineIdx].getAccelerationAtTime(t - timeOffset);
 }

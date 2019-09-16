@@ -103,19 +103,19 @@ class PolynomialSpline {
   //! Get the spline evaluated at time tk.
   constexpr double getPositionAtTime(double tk) const {
     return std::inner_product(coefficients_.begin(), coefficients_.end(),
-                              SplineImplementation::tau(std::max(0.0, std::min(tk, duration_))).begin(), 0.0);
+                              SplineImplementation::tau(tk).begin(), 0.0);
   }
 
   //! Get the first derivative of the spline evaluated at time tk.
   constexpr double getVelocityAtTime(double tk) const {
     return std::inner_product(coefficients_.begin(), coefficients_.end(),
-                              SplineImplementation::dtau(std::max(0.0, std::min(tk, duration_))).begin(), 0.0);
+                              SplineImplementation::dtau(tk).begin(), 0.0);
   }
 
   //! Get the second derivative of the spline evaluated at time tk.
   constexpr double getAccelerationAtTime(double tk) const {
     return std::inner_product(coefficients_.begin(), coefficients_.end(),
-                              SplineImplementation::ddtau(std::max(0.0, std::min(tk, duration_))).begin(), 0.0);
+                              SplineImplementation::ddtau(tk).begin(), 0.0);
   }
 
 
