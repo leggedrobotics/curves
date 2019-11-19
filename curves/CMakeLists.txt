@@ -90,6 +90,12 @@ target_link_libraries(${PROJECT_NAME}_tests
   glog
 )
 
+find_package(cmake_code_coverage QUIET)
+if(cmake_code_coverage_FOUND)
+  add_gtest_coverage(TEST_BUILD_TARGETS ${PROJECT_NAME}_tests)
+endif(cmake_code_coverage_FOUND)
+
+
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

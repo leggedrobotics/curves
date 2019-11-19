@@ -3,7 +3,8 @@
   <name>curves_ros</name>
   <version>0.4.0</version>
   <description>ROS interface for curves library.</description>
-  <maintainer email="pfankhauser@anybotics.com">Peter Fankhauser</maintainer>
+  <maintainer email="vyuryev@anybotics.com">Valentin Yuryev</maintainer>
+  <maintainer email="avijayan@anybotics.com">Aravind Vijayan</maintainer>
   <license>BSD</license>
   <url>https://github.com/anybotics/curves</url>
   <author email="pfankhauser@anybotics.com">Péter Fankhauser</author>
