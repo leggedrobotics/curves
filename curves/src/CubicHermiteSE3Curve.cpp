@@ -11,6 +11,8 @@
 #include "curves/CubicHermiteSE3Curve.hpp"
 #include "curves/SlerpSE3Curve.hpp"
 
+#include <kindr/rotations/Rotation.hpp>
+
 namespace curves {
 
 CubicHermiteSE3Curve::CubicHermiteSE3Curve() : SE3Curve() {
@@ -347,15 +349,15 @@ bool CubicHermiteSE3Curve::evaluateDerivative(DerivativeType& derivative,
       const SO3 w2_beta2_exp = RotationQuaternion().exponentialMap((beta2) * w2);
       const SO3 w3_beta3_exp = RotationQuaternion().exponentialMap((beta3) * w3);
 
-      const RotationQuaternion w1_dbeta1(0.0, dbeta1 * w1);
-      const RotationQuaternion w2_dbeta2(0.0, dbeta2 * w2);
-      const RotationQuaternion w3_dbeta3(0.0, dbeta3 * w3);
+      const RotationQuaternionDiff w1_dbeta1(0.0, dbeta1 * w1);
+      const RotationQuaternionDiff w2_dbeta2(0.0, dbeta2 * w2);
+      const RotationQuaternionDiff w3_dbeta3(0.0, dbeta3 * w3);
 
       const Eigen::Vector4d diff =    ((T_W_A.getRotation() * w1_beta1_exp * w1_dbeta1    * w2_beta2_exp * w3_beta3_exp).vector()
                               + (T_W_A.getRotation() * w1_beta1_exp * w2_beta2_exp * w2_dbeta2    * w3_beta3_exp).vector()
                               + (T_W_A.getRotation() * w1_beta1_exp * w2_beta2_exp * w3_beta3_exp * w3_dbeta3   ).vector())*one_over_dt_sec;
 
-      const RotationQuaternion qDiff(diff);
+      const RotationQuaternionDiff qDiff(diff);
       ValueType q;
       if(!evaluate(q, time)) {
         return false;
