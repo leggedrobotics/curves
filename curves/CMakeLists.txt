@@ -69,26 +69,28 @@ add_dependencies(${PROJECT_NAME}
   ${catkin_EXPORTED_TARGETS}
 )
 
-catkin_add_gtest(${PROJECT_NAME}_tests
-  test/test_main.cpp
-  test/CubicHermiteSE3CurveTest.cpp
-  test/PolynomialSplineContainerTest.cpp
-  test/PolynomialSplineVectorSpaceCurveTest.cpp
-  test/PolynomialSplineQuinticScalarCurveTest.cpp
-  test/PolynomialSplinesTest.cpp
-#  test/test_LocalSupport2CoefficientManager.cpp
-#  test/test_Hermite.cpp
-#  test/test_MITb_dataset.cpp
-#  test/test_Pose2_Expressions.cpp
-#  test/test_MITb_dataset_SE2.cpp
-  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test
-)
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(${PROJECT_NAME}_tests
+    test/test_main.cpp
+    test/CubicHermiteSE3CurveTest.cpp
+    test/PolynomialSplineContainerTest.cpp
+    test/PolynomialSplineVectorSpaceCurveTest.cpp
+    test/PolynomialSplineQuinticScalarCurveTest.cpp
+    test/PolynomialSplinesTest.cpp
+  #  test/test_LocalSupport2CoefficientManager.cpp
+  #  test/test_Hermite.cpp
+  #  test/test_MITb_dataset.cpp
+  #  test/test_Pose2_Expressions.cpp
+  #  test/test_MITb_dataset_SE2.cpp
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test
+  )
 
-target_link_libraries(${PROJECT_NAME}_tests
-  ${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-  glog
-)
+  target_link_libraries(${PROJECT_NAME}_tests
+    ${PROJECT_NAME}
+    ${catkin_LIBRARIES}
+    glog
+  )
+endif()
 
 find_package(cmake_code_coverage QUIET)
 if(cmake_code_coverage_FOUND)
